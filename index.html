@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0053e2"><meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="A simple, personal technician procedure checklist. Autosaves on this device.">
+  <title>Technician Procedure Helper</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><div class="brand"><svg class="spark" viewBox="0 0 64 64" aria-hidden="true"><g stroke="currentColor" stroke-width="8" stroke-linecap="round"><path d="M32 6v12M32 46v12M9.5 19l10.4 6M44.1 39l10.4 6M9.5 45l10.4-6M44.1 25l10.4-6"/></g></svg><div><span class="brand-title">Technician<br>Procedure Helper</span><span class="brand-sub">YOUR PERSONAL SERVICE LOG</span></div></div><button id="menu-button" class="menu-button" aria-label="Open options" aria-haspopup="dialog">☰</button></header>
+  <main>
+    <div id="storage-error" class="error" role="alert" hidden></div>
+    <section id="checklist-view">
+      <div class="page-heading"><div><div class="eyebrow">READY FOR THE NEXT ONE</div><h1>Quick check. All set.</h1><p>A few details, and you’re done.</p></div><span class="heading-icon" aria-hidden="true">✓</span></div>
+      <button id="resume-banner" class="resume-banner" hidden></button>
+      <form id="checklist" class="card">
+        <div class="card-top"><span><span class="blue-dot"></span> <strong id="form-title">New checklist</strong></span><span id="save-status" class="save-status" role="status">Saved as you go</span></div>
+        <div class="fields">
+          <label for="technician">Technician <span class="required">*</span></label><select id="technician" required><option value="">Choose a technician</option></select>
+          <label for="ticket">Ticket number <span class="required">*</span></label><div class="ticket-field"><span class="ticket-hash" aria-hidden="true">#</span><input id="ticket" type="text" inputmode="numeric" pattern="[0-9]+" maxlength="30" autocomplete="off" placeholder="Enter ticket number" required><button id="tickets-toggle" type="button" aria-label="Choose a recent ticket" aria-expanded="false" aria-controls="recent-tickets">⌄</button></div><div id="recent-tickets" class="recent-tickets" hidden></div>
+          <label for="service">Service type <span class="required">*</span></label><select id="service" required><option value="">Choose a service</option><option>Upper bay</option><option>Lower bay</option><option>Tire</option><option>TPMS</option><option>Battery</option><option>Service writer</option></select>
+          <fieldset><legend>All procedures performed correctly? <span class="required">*</span></legend><div class="choices"><label class="choice"><input type="radio" name="correct" value="yes" required><span><b aria-hidden="true">✓</b> Yes, all correct</span></label><label class="choice"><input type="radio" name="correct" value="no"><span><b aria-hidden="true">!</b> No, add details</span></label></div></fieldset>
+          <div id="notes-wrap" hidden><label for="notes">What wasn’t done correctly? <span class="required">*</span></label><textarea id="notes" rows="4" placeholder="Describe the missed procedure or what needs attention…"></textarea></div>
+        </div>
+        <div class="card-bottom"><p class="autosave-note"><span aria-hidden="true">◉</span> Your progress saves automatically on this device.</p><button class="primary done" type="submit">Done <span aria-hidden="true">✓</span></button></div>
+      </form>
+      <div class="daily-summary"><div><strong id="today-count">0</strong><span>completed today</span></div><button id="view-completed" class="text-button">View completed <span aria-hidden="true">→</span></button></div>
+      <p class="local-note">Made for your workflow. Saved in this browser.<br>Personal helper · Not an official Walmart application.</p>
+    </section>
+    <section id="list-view" hidden><button class="back-button" data-home>← New checklist</button><div class="page-heading"><div><div class="eyebrow">YOUR SERVICE LOG</div><h1 id="list-title">Completed forms</h1><p id="list-subtitle"></p></div></div><input id="search" type="search" placeholder="Search technician, ticket, or service" aria-label="Search forms"><div id="records-list"></div><button id="export-csv" class="secondary full">Export completed forms (CSV)</button></section>
+    <section id="tech-view" hidden><button class="back-button" data-home>← New checklist</button><div class="page-heading"><div><div class="eyebrow">YOUR TEAM</div><h1>Technicians</h1><p>Always in alphabetical order.</p></div></div><form id="add-tech" class="add-tech"><input id="new-tech" placeholder="Technician name" aria-label="Technician name" maxlength="80" required><button class="primary" type="submit">Add</button></form><div id="tech-list" class="card"></div></section>
+  </main>
+  <dialog id="options"><div class="dialog-heading"><h2>Options</h2><button class="close-button" data-close aria-label="Close options">×</button></div><nav><button data-nav="home">New checklist <span>＋</span></button><button data-nav="completed">Completed forms <span>→</span></button><button data-nav="drafts">Unfinished checklists <span>→</span></button><button data-nav="techs">Manage technicians <span>→</span></button></nav><div class="backup-section"><h3>Keep a backup</h3><p>Data stays in this browser. Download a backup before changing devices, clearing browser data, or moving to a new app address.</p><button id="backup" class="secondary full">Download backup</button><button id="restore" class="text-button full">Restore a backup</button><input type="file" id="restore-file" accept="application/json,.json" hidden></div></dialog>
+  <dialog id="detail"><div class="dialog-heading"><h2>Completed checklist</h2><button class="close-button" data-close aria-label="Close details">×</button></div><div id="detail-content"></div><button id="copy-record" class="primary full">Copy for dashboard</button><button id="mark-transferred" class="secondary full">Mark as transferred</button><p class="dialog-note">Copy the details and enter them in your official dashboard.</p></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
