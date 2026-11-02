@@ -1,7 +1,7 @@
 'use strict';
 const PREFIX = 'tph:v1:';
 const DEFAULT_TECHS = ['Jack','Steve','Carl','Fabian','Elvis','Tlyar','Romwell','Brandon','David','Josh'];
-const SERVICES = ['Upper bay','Lower bay','Tire','TPMS','Battery','Service writer'];
+const SERVICES = ['Upper bay','Lower bay','Tire','TPMS','Battery','Service writer','Courtesy'];
 const $ = id => document.getElementById(id);
 const sortNames = names => [...names].sort((a,b) => a.localeCompare(b, undefined, {sensitivity:'base'}));
 let activeId = null, selectedRecord = null, listMode = 'completed', toastTimer;
